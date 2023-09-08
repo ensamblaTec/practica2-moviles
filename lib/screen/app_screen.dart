@@ -11,27 +11,28 @@ class AppScreen extends StatefulWidget {
 }
 
 class _AppScreenState extends State<AppScreen> {
+  bool isFilter = GlobalVariables.isFilter.value;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
-      body: ListView(
-        children: <Widget>[
-          Column(
-            children: [
-              const CarouselScreen(),
-              ValueListenableBuilder(
-                valueListenable: GlobalVariables.indexCarousel,
-                builder: (context, value, _) {
-                  return CarouselInformation(
-                    selectedIndex: GlobalVariables.indexCarousel,
-                  );
-                },
-              ),
-            ],
-          ),
-        ],
-      ),
+      body: ValueListenableBuilder(
+          valueListenable: GlobalVariables.indexCarousel,
+          builder: (context, value, _) {
+            return ListView(
+              children: <Widget>[
+                Column(
+                  children: [
+                    CarouselScreen(),
+                    CarouselInformation(
+                      selectedIndex: GlobalVariables.indexCarousel,
+                    )
+                  ],
+                ),
+              ],
+            );
+          }),
     );
   }
 
@@ -54,13 +55,19 @@ class _AppScreenState extends State<AppScreen> {
         ],
       ),
       actions: <Widget>[
-        IconButton(
-          icon: const Icon(
-            Icons.shopping_cart,
-            color: Colors.white,
-          ),
-          onPressed: () {},
-        ),
+        ValueListenableBuilder(
+            valueListenable: GlobalVariables.isFilter,
+            builder: (context, value, _) {
+              return IconButton(
+                icon: Icon(
+                  !value ? Icons.favorite_border : Icons.favorite,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  GlobalVariables.isFilter.value = !value;
+                },
+              );
+            }),
         const SizedBox(
           width: 20.0,
         ),

@@ -85,7 +85,7 @@ class _CarouselInformationState extends State<CarouselInformation> {
                   style: const TextStyle(letterSpacing: 2.0, fontSize: 15.0),
                 ),
               ),
-              Expanded(child: Text("")),
+              const Expanded(child: Text("")),
               Row(
                 children: [
                   ButtonTheme(
